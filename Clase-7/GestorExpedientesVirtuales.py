@@ -49,13 +49,19 @@ def crearExpediente(nombreEstudiante: str) -> Callable[[str, float, int], str]:
 gestor = crearExpediente("David Mendoza")
 
 # Caso 1: Nota insuficiente (Rechazo)
-print(gestor("Programación Funcional", 5.5, 4)) 
+print(gestor("Desenvomiento de Sistema Corporativos", 6.9, 3)) 
 # Salida: Registro rechazado por validación de nota.
 
 # Caso 2: Primer registro exitoso
-print(gestor("Programacion Orientada a Objetos", 9.5, 4)) 
-# Salida: Estudiante: David Mendoza | Promedio: 9.5 | Créditos: 4
+print(gestor("Teste de SOftware", 9.5, 3)) 
+# Salida: Estudiante: David Mendoza | Promedio: 9.5 | Créditos: 3
 
-# Caso 3: Segundo registro (Persistencia de créditos: 4 + 3 = 7)
-print(gestor("Base de Datos 1", 10.0, 3)) 
-# Salida: Estudiante: David Mendoza | Promedio: 9.0 | Créditos: 7
+# Caso 3: Segundo registro (Persistencia de créditos: 3 + 3 = 6)
+print(gestor("Gerencia de Proyectos", 10.0, 3)) 
+# Salida: Estudiante: David Mendoza | Promedio: 9.8 | Créditos: 6
+
+print(gestor("Base de Datos 2", 10.0, 3)) 
+# Salida: Estudiante: David Mendoza | Promedio: 9.8 | Créditos: 9
+
+print(gestor("Programacion Funcional", 10.0, 3)) 
+# Salida: Estudiante: David Mendoza | Promedio: 9.9 | Créditos: 12
