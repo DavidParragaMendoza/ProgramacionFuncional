@@ -16,14 +16,6 @@
 > [!IMPORTANT]
 > El gestor rechaza notas inferiores a `7.0` y solo acumula los registros aprobados.
 
-## 🧭 Contenido
-
-- [🎯 Objetivo](#-objetivo)
-- [🧠 Conceptos aplicados](#-conceptos-aplicados)
-- [⚙️ Funcionamiento](#️-funcionamiento)
-- [▶️ Ejecución](#️-ejecución)
-- [📫 Contacto](#-contacto)
-
 ## 🎯 Objetivo
 
 Este ejercicio integra varios conceptos de programación funcional en un caso práctico: un gestor de expedientes académicos. Cada estudiante obtiene su propio gestor configurado con un nombre y puede registrar materias aprobadas sin exponer directamente el historial ni el total de créditos.
