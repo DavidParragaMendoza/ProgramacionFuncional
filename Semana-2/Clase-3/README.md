@@ -1,116 +1,230 @@
-# **Problema del billón de dólares**
+# 🧩 Pattern Matching estructural
 
-**¿Por qué ocurre el error tradicionalmente?**
+> **Semana 2 · Clase 3**
+> Modelado seguro con tipos suma, tipos producto y coincidencia de patrones en Python.
 
-En la programación tradicional, solemos crear estructuras generales donde algunos campos se dejan vacíos (`None`), y luego nos vemos obligados a hacer **programación defensiva** plagada de controles como `if dato is not None:` para evitar fallos. Si olvidas un solo `if`, el programa colapsa inesperadamente en ejecución.
+## 📌 En esta clase
+
+- El problema de los estados inválidos y el uso excesivo de `None`.
+- Tipos producto: datos que existen juntos (**Y**).
+- Tipos suma: alternativas mutuamente excluyentes (**O**).
+- Pattern matching estructural para procesar datos por su forma.
+- Pattern matching aplicado a clases inmutables.
+
+## 🧭 Índice
+
+1. [El problema del billón de dólares](#-el-problema-del-billón-de-dólares)
+2. [La solución funcional](#-la-solución-funcional)
+3. [Tipos producto y tipos suma](#-tipos-producto-y-tipos-suma)
+4. [Pattern matching estructural](#-pattern-matching-estructural)
+5. [Ejemplo: respuesta de un servidor](#-ejemplo-respuesta-de-un-servidor)
+6. [Pattern matching con clases](#-pattern-matching-con-clases)
+7. [Resumen](#-resumen)
 
 ---
 
-### La solución funcional: "Hacer lo ilegal, irrepresentable"
+## 💥 El problema del billón de dólares
 
-<aside>
-💡
+En la programación tradicional solemos crear estructuras generales donde algunos
+campos pueden quedar vacíos (`None`). Después, cada parte del programa debe
+protegerse con comprobaciones como `if dato is not None:`.
 
-Diseñamos la arquitectura usando **Tipos Suma** y **Tipos Producto** para que una combinación inválida de datos sea **mecánicamente imposible de crear**.
-
-</aside>
-
----
-
-### Ejemplo: La respuesta de un servidor
-
-Imagina que le pides la información de un usuario a una base de datos. La respuesta puede salir bien o fallar por un error de conexión.
-
-#### ❌ La forma tradicional (causante del error `NoneType`):
+El problema aparece cuando olvidamos una de esas comprobaciones:
 
 ```python
-# Usamos un solo diccionario o clase donde todo puede ser None
-respuesta = {"exito": False, "usuario": None, "error": "Conexión fallida"}
+respuesta = {
+    "exito": False,
+    "usuario": None,
+    "error": "Conexión fallida",
+}
 
-# Si te confías en otra parte del código y lees el usuario directamente:
+# El diseño permite leer un usuario que no existe.
 print(respuesta["usuario"].upper())
-# ¡BOOM! AttributeError: 'NoneType' object has no attribute 'upper'
+# AttributeError: 'NoneType' object has no attribute 'upper'
 ```
 
-Aquí el diseño de datos permitió que existiera una respuesta fallida pero manteniendo la variable `usuario` apuntando a `None`.
+La estructura permite representar una respuesta fallida que, al mismo tiempo,
+contiene un usuario inexistente. El error no se descubre hasta la ejecución.
 
----
+> **Idea clave:** un buen diseño de tipos debe impedir que los estados inválidos
+> puedan construirse.
 
-### Concepto 2: Los bloques de construcción (Tipos Producto y Tipos Suma)
+## 🛡️ La solución funcional
 
-Para modelar la información de forma segura, nos apoyamos en dos bloques de construcción esenciales:
+La programación funcional busca **hacer lo ilegal irrepresentable**. Para ello,
+la arquitectura de datos se diseña con:
 
-1. **Tipos Producto (La relación "Y"):**
-    - Agrupa varios campos de datos que **deben existir todos al mismo tiempo**.
-    - Ejemplo cotidiano: Un **`Usuario`** tiene un ID **Y** un Nombre **Y** un Correo. Una coordenada geográfica necesita Latitud **Y** Longitud. Si falta alguno, la estructura está incompleta.
-2. **Tipos Suma (La relación "O"):**
-    - Define una estructura que representa **una opción de entre varias alternativas mutuamente excluyentes**.
-    - *Ejemplo cotidiano:* La respuesta de un servidor de red puede ser un **`Éxito`** **O** un **`Error,`** no puede ser ambas a la vez. Una figura geométrica puede ser un **`Círculo`** **O** un **`Rectángulo` O** un **`Triángulo`**.
+- **Tipos producto**, que agrupan datos que deben existir juntos.
+- **Tipos suma**, que representan una opción entre varias alternativas.
+- **Pattern matching**, que permite procesar cada alternativa de forma explícita.
 
----
+Así, el tipo de cada dato comunica qué estados son válidos y guía al
+programador hacia un código más seguro.
 
-### Concepto 3: Pattern Matching Estructural (Evaluar por la "forma")
+## 🧱 Tipos producto y tipos suma
 
-Normalmente, para procesar datos complejos, escribimos largas cadenas de `if/elif` comprobando manualmente tipos, longitudes o contenidos.
+### Tipo producto: la relación «Y»
 
-El **Pattern Matching Estructural** nos permite tomar decisiones evaluando directamente la **forma física o patrón del dato**. 
+Un tipo producto agrupa varios campos que deben existir al mismo tiempo.
 
-En lugar de hacer múltiples preguntas imperativas, declaramos la estructura esperada por ejemplo: 
+| Ejemplo | Datos requeridos |
+| --- | --- |
+| `Usuario` | ID **y** nombre **y** correo |
+| `Coordenada` | Latitud **y** longitud |
+| `Rectangulo` | Ancho **y** alto |
 
-<aside>
-💡
+Si falta uno de los campos, la estructura está incompleta.
 
-Si es una tupla de dos elementos con la palabra “login” y un nombre y el sistema desempaca y extrae la información automáticamente si la forma coincide.
+### Tipo suma: la relación «O»
 
-</aside>
+Un tipo suma representa una alternativa entre varias posibilidades mutuamente
+excluyentes:
 
----
+| Ejemplo | Alternativas |
+| --- | --- |
+| Respuesta de un servidor | `Exito` **o** `Error` |
+| Figura geométrica | `Circulo` **o** `Rectangulo` **o** `Triangulo` |
 
-### Resumen en una frase
+Una respuesta no puede ser un éxito y un error al mismo tiempo. Cada variante
+contiene únicamente la información que necesita.
 
-- **Tipos como Arquitectura:** Definen qué formas de datos **tienen permitido existir** en el sistema.
-- **Pattern Matching:** Reconoce la **forma** del dato recibido y **desarma su contenido** para procesarlo directamente.
+## 🔎 Pattern matching estructural
 
----
+Normalmente, para procesar datos complejos escribimos cadenas de `if/elif` que
+comprueban tipos, longitudes o contenidos.
 
-#### ✅ La forma funcional (Tipos Suma + Pattern Matching):
+El **pattern matching estructural** permite tomar decisiones evaluando
+directamente la forma del dato. Además de comprobar si el patrón coincide,
+puede extraer sus valores automáticamente.
 
-Modelamos la respuesta expresando que solo existen dos formas cerradas y válidas:
+Por ejemplo:
+
+> Si recibimos una tupla de dos elementos cuya primera posición es `"login"`,
+> podemos reconocerla y extraer el nombre desde la segunda posición.
+
+Esto permite describir **qué forma esperamos** en lugar de escribir paso a paso
+cómo inspeccionar el dato.
+
+## 🌐 Ejemplo: respuesta de un servidor
+
+La respuesta de una consulta puede ser un éxito o un error. En lugar de usar
+campos opcionales, definimos dos estructuras válidas:
 
 ```python
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class Exito:
-    usuario: str  # Si es Éxito, OBLIGATORIAMENTE lleva el nombre del usuario
+    usuario: str
+
 
 @dataclass(frozen=True)
 class Error:
-    codigo: int   # Si es Error, OBLIGATORIAMENTE lleva el código numérico
+    codigo: int
 
-# Tipo Suma: La respuesta es un Exito O un Error (nunca ambos, nunca None)
+
+# Tipo suma: el resultado es un Exito o un Error, nunca None.
 Resultado = Exito | Error
 ```
 
-Al procesar este resultado con **Pattern Matching**, la estructura te guía de forma segura:
+Ahora podemos procesar cada variante con seguridad:
 
 ```python
-def procesar_respuesta(res: Resultado):
+def procesar_respuesta(res: Resultado) -> None:
     match res:
         case Exito(usuario):
-            # Aquí es IMPOSIBLE que 'usuario' sea None, la estructura lo garantiza
             print(f"Usuario obtenido: {usuario.upper()}")
         case Error(codigo):
-            # Aquí ni siquiera existe la variable 'usuario', no hay riesgo de error
-            print(f"Error detectado código: {codigo}")
+            print(f"Error detectado. Código: {codigo}")
 ```
 
----
+### ¿Por qué este diseño es más seguro?
 
-### ¿Por qué esto resuelve el problema?
+1. **Los estados inválidos no se pueden crear:** un `Exito` siempre requiere un
+   usuario y un `Error` siempre requiere un código.
+2. **Desaparecen los `None` sueltos:** cada variante guarda solo los datos que
+   necesita.
+3. **El patrón documenta la lógica:** cada `case` representa una posibilidad
+   concreta del tipo suma.
+4. **Los datos se extraen automáticamente:** no es necesario acceder a campos
+   que podrían no existir.
 
-1. **Estados ilegales imposibles:** No puedes crear un **`Exito`** sin usuario ni un **`Error`** con datos corruptos.
-2. **Desaparecen los `None` sueltos:** Cada variante (`Exito` o `Error`) almacena **únicamente** la información que requiere.
-3. **El código es seguro por construcción:** En el bloque `case Error`, el lenguaje ni siquiera te permite intentar leer un nombre de usuario porque sabe que esa propiedad no existe en esa forma.
+## 📐 Pattern matching con clases
 
----
+### 1. Importación e inmutabilidad
+
+```python
+from dataclasses import dataclass
+```
+
+`dataclass` pertenece a la biblioteca estándar de Python y evita escribir
+manualmente métodos repetitivos como `__init__`.
+
+Usaremos `frozen=True` para crear objetos inmutables, una práctica alineada con
+la programación funcional: una vez creado un objeto, sus datos no cambian.
+
+### 2. Definición de `Circulo`
+
+```python
+@dataclass(frozen=True)
+class Circulo:
+    radio: float
+```
+
+- `class Circulo` define la estructura de un círculo.
+- `radio: float` declara su único dato obligatorio.
+- `frozen=True` impide modificar el radio después de crear el objeto.
+
+### 3. Definición de `Rectangulo`
+
+```python
+@dataclass(frozen=True)
+class Rectangulo:
+    ancho: float
+    alto: float
+```
+
+El rectángulo requiere **ancho y alto**. Ambos atributos forman un tipo
+producto.
+
+### 4. Creación del tipo suma
+
+```python
+FormaGeometrica = Circulo | Rectangulo
+```
+
+El alias indica que una `FormaGeometrica` solo puede ser un `Circulo` o un
+`Rectangulo`.
+
+### 5. Cálculo del área con `match`
+
+```python
+def calcular_area(forma: FormaGeometrica) -> float:
+    match forma:
+        case Circulo(radio):
+            return 3.1416 * (radio ** 2)
+        case Rectangulo(ancho, alto):
+            return ancho * alto
+```
+
+| Patrón | Qué ocurre |
+| --- | --- |
+| `case Circulo(radio)` | Comprueba la clase y extrae su radio. |
+| `case Rectangulo(ancho, alto)` | Comprueba la clase y extrae sus dos medidas. |
+| `return ...` | Calcula y devuelve el área correspondiente. |
+
+El `match` hace que la función sea fácil de leer: cada forma tiene una rama
+propia y los datos se reciben ya separados en variables útiles.
+
+## ✅ Resumen
+
+- **Tipos producto:** representan datos que deben existir juntos (**Y**).
+- **Tipos suma:** representan alternativas válidas (**O**).
+- **Pattern matching:** reconoce la forma de un dato y extrae su contenido.
+- **Inmutabilidad:** evita cambios inesperados después de crear una estructura.
+- **Diseño funcional:** reduce comprobaciones defensivas y evita estados
+  inválidos desde el origen.
+
+> **En una frase:** los tipos definen las formas válidas y el pattern matching
+> permite procesarlas de manera segura y expresiva.

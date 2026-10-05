@@ -22,8 +22,17 @@ def calcular_area(forma: FormaGeometrica) -> float:
         case Rectangulo(a, h):
             # Reconoce si es Rectangulo y guarda su ancho en 'a' y alto en 'h'
             return a * h
+        case Rectangulo(a, h) if a == h:
+            # Reconoce si es un cuadrado (Rectangulo con ancho igual a alto)
+            return f"Es un cuadrado de {a}x{h}"
 
 
 # 4. Ejemplos de uso
 circulo = Circulo(radio=5)
 rectangulo = Rectangulo(ancho=4, alto=6)
+
+# 4. Ejemplos de uso 
+circulo = Circulo(radio=5.0) 
+rectangulo = Rectangulo(ancho=4.0, alto=6.0) 
+print(calcular_area(circulo)) # Salida: 78.54 
+print(calcular_area(rectangulo)) # Salida: 24
