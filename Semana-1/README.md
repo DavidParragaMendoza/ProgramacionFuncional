@@ -4,6 +4,13 @@
 
 ### Semana 1 · Del "Cómo" al "Qué" · Paradigma Declarativo
 
+[![Semana 1](https://img.shields.io/badge/Semana_1-Inicio-3776AB?style=for-the-badge&logo=readme&logoColor=white)](README.md)
+[![Sintaxis y Tipos](https://img.shields.io/badge/Guía_1-Sintaxis_y_Tipos-0078D4?style=for-the-badge)](3-IntroduccionPythonSintaxisTiposBásicos.md)
+[![Estructuras y Flujo](https://img.shields.io/badge/Guía_2-Estructuras_y_Flujo-2EA44F?style=for-the-badge)](2-EstructurasFlujoFuncionesBibliotecas.md)
+[![Tarea 1](https://img.shields.io/badge/Tarea_1-Ejercicios-8250DF?style=for-the-badge)](Tarea1-EjerciciosconPython2/README.md)
+
+<br>
+
 <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
 <img src="https://img.shields.io/badge/Paradigma-Declarativo-2EA44F?style=for-the-badge" alt="Paradigma Declarativo">
 <img src="https://img.shields.io/badge/Pilares-3-8250DF?style=for-the-badge" alt="3 Pilares">
@@ -26,6 +33,7 @@
   - [C) Transparencia Referencial 🔍](#c-transparencia-referencial-)
 - [⚡ 3. ¿Por qué importa esto hoy?](#-3-por-qué-importa-esto-hoy)
 - [📂 Material complementario de la semana](#-material-complementario-de-la-semana)
+- [🧭 Navegación entre Guías](#-navegación-entre-guías)
 - [📫 Contacto](#-contacto)
 
 ---
@@ -100,14 +108,16 @@ Antes, los procesadores solo se hacían más rápidos en un único núcleo. Hoy,
 
 ---
 
-## 📂 Material complementario de la semana
 
-| Archivo / Carpeta | Descripción |
-|---|---|
-| [`2-EstructurasFlujoFuncionesBibliotecas.md`](2-EstructurasFlujoFuncionesBibliotecas.md) | Guía sobre estructuras de datos básicas, funciones y librerías en Python |
-| [`3-IntroduccionPythonSintaxisTiposBásicos.md`](3-IntroduccionPythonSintaxisTiposBásicos.md) | Introducción a Python, sintaxis elemental y tipado dinámico/fuerte |
-| [`BasePython/`](BasePython/) | Ejercicios básicos de sintaxis, variables y flujo de control |
-| [`Tarea1-EjerciciosconPython2/`](Tarea1-EjerciciosconPython2/) | Prácticas y ejercicios resueltos de la Semana 1 |
+## 🧭 Navegación entre Guías
+
+<div align="center">
+
+| 🏠 Inicio | 📘 Guía 1: Sintaxis y Tipos | 📗 Guía 2: Estructuras y Flujo | 🧪 Tarea 1: Práctica |
+| :---: | :---: | :---: | :---: |
+| [Semana 1](README.md) | [1. Sintaxis Básica](3-IntroduccionPythonSintaxisTiposBásicos.md) | [2. Estructuras & NumPy](2-EstructurasFlujoFuncionesBibliotecas.md) | [Tarea 1](Tarea1-EjerciciosconPython2/README.md) |
+
+</div>
 
 ---
 
