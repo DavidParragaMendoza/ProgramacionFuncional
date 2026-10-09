@@ -15,6 +15,4 @@ def calcularTotal(precios, regla) -> float:
 
 print(calcularTotal([50, 120, 300], lambda p: p))
 
-print(calcularTotal([50, 120, 300], 
-                    lambda p: 
-                        p * 0.8 if p > 100 else p))
+print(calcularTotal([50, 120, 300], lambda p: p * 0.8 if p > 100 else p))

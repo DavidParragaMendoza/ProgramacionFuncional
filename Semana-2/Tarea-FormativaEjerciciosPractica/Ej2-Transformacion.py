@@ -9,6 +9,12 @@ De la lista ["hola", "programación", "sol", "universidad"], obtén una lista co
 #lista de palabras
 listaPalabras:list[str] = ["hola", "programación", "sol", "universidad"]
 
+'''
+variable = len("hola")
+print(variable)
+'''
+
+
 #obtener la longitud de cada palabra
 longitudPalabras = list(
     map(len, listaPalabras))
