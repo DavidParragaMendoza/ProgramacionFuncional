@@ -46,6 +46,6 @@ print(f"Mapeo seguro sin excepción: {RESULTADO_SEGURO_FALLIDO}")
 
 # Ejemplo 2: Bifurcación declarativa final del flujo (.match)
 dividir(2.0, 0.0).match(
-    onSuccess=lambda data: print(f"✅ Éxito en el sistema: {data}"),
-    onFailure=lambda msg: print(f"❌ Fallo controlado: {msg}")
+    onSuccess=lambda data: print(f"Éxito en el sistema: {data}"),
+    onFailure=lambda msg: print(f"Fallo controlado: {msg}")
 )
